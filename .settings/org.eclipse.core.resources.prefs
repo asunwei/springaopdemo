@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/com/learn/aop/InterceptorAop.java=UTF-8
+encoding//src/main/java/com/learn/entity/UserManager.java=UTF-8
+encoding//src/main/java/com/learn/service/UserManagerService.java=UTF-8
+encoding//src/main/java/com/learn/service/UserManagerServiceImpl.java=UTF-8
+encoding//src/test/java=UTF-8
+encoding//src/test/java/com/learn/service/TestUserManager.java=UTF-8
+encoding//src/test/java/com/learn/service/TestUserManager1.java=UTF-8
+encoding/<project>=UTF-8

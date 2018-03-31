@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<!-- 目标类 -->
+	<bean id="userManager" class="com.learn.service.UserManagerServiceImpl" />
+	<!-- 切面类 -->
+	<bean id="aspetBean" class="com.learn.aop.InterceptorAop" />
+
+	<aop:config>
+		<aop:aspect id="aspet" ref="aspetBean">
+			<aop:pointcut expression="execution (* com.learn.service..*.*(..))"
+				id="cut" />
+			<!-- Before:在目标方法被调用之前做增强处理,@Before只需要指定切入点表达式即可 -->
+			<aop:before pointcut-ref="cut" method="doBefore" />
+			<!-- AfterReturning:在目标方法正常完成后做增强,@AfterReturning除了指定切入点表达式后， 
+			还可以指定一个返回值形参名returning,代表目标方法的返回值 -->
+			<aop:after-returning pointcut-ref="cut"
+				method="doAferReturning" />
+			<!-- After:在目标方法完成之后做增强，无论目标方法是否成功完成。@After可以指定一个切入点表达式 -->
+			<aop:after pointcut-ref="cut" method="doAfter" />
+			<!-- AfterThrowing:主要用来处理程序中未处理的异常,@AfterThrowing除了指定切入点表达式后，
+			 还可以指定一个throwing的返回值形参名,可以通过该形参名来访问目标方法中所抛出的异常对象 -->
+			<aop:after-throwing pointcut-ref="cut" method="doAferThrowing" />
+			<!-- Around:环绕通知,在目标方法完成前后做增强处理,环绕通知是最重要的通知类型, 
+			像事务,日志等都是环绕通知,注意编程中核心是一个ProceedingJoinPoint -->
+			<aop:around pointcut-ref="cut" method="doAround" />
+		</aop:aspect>
+	</aop:config>
+</beans>
